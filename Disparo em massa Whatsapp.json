@@ -1,0 +1,697 @@
+{
+  "name": "Sheets - Whatsapp",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Trigger\n\nInicia o fluxo de maneira manual ou programável",
+        "height": 520,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        32,
+        -96
+      ],
+      "id": "66b74d1f-8faf-4d99-a81d-68b3bf8dcecd",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Dados\n\nBusca tabela de dados no Google Sheets",
+        "height": 520,
+        "width": 244,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        320,
+        -96
+      ],
+      "id": "418cf101-5f41-45e5-9a72-187e7258d597",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Condicional\n\nFiltra apenas os contatos que ainda não foram disparados",
+        "height": 520,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        608,
+        -96
+      ],
+      "id": "91127aaf-20a2-4997-b35a-d10377d706e0",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Loop\n\nDispara mensagens uma a uma até finalizar",
+        "height": 520,
+        "width": 256,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        896,
+        -96
+      ],
+      "id": "9780a9ab-06ec-4ed1-8ff0-036e8973dd79",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        976,
+        144
+      ],
+      "id": "66f4042e-e352-4aff-89fb-bc44948cb8b7",
+      "name": "Processar Contatos",
+      "notes": "Encontre mais em:\nlinks.dnnr.dev ou\nhttps://www.youtube.com/@devdenegociosmg"
+    },
+    {
+      "parameters": {
+        "content": "## Tratamento de Dados\nPreenche a mensagem para disparo + captura de telefone\n\n",
+        "height": 520,
+        "width": 270,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        -96
+      ],
+      "id": "bc780409-b173-4b1b-b986-09fe64ab661f",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "## Envio da mensagem\nEnvia mensagem pelo Evolution",
+        "height": 520,
+        "width": 268,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        -96
+      ],
+      "id": "9b8b4b3d-55de-4b91-ac63-0fa420d63926",
+      "name": "Sticky Note13"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "documentId": {
+          "__rl": true,
+          "value": "1DjFTIVTATutTFBxiWN6KwUe_QRNnAmFLP-O75gNMxEg",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 267611872,
+          "mode": "list",
+          "cachedResultName": "dados",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1DjFTIVTATutTFBxiWN6KwUe_QRNnAmFLP-O75gNMxEg/edit#gid=267611872"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        400,
+        144
+      ],
+      "id": "22922998-35ae-490c-b4e8-c31696cb2a61",
+      "name": "Listar Contatos",
+      "credentials": {
+        "googleApi": {
+          "id": "swkTbfQwhacJlp71",
+          "name": "Google Service Account account"
+        }
+      },
+      "notes": "Encontre mais em:\nlinks.dnnr.dev ou\nhttps://www.youtube.com/@devdenegociosmg"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1DjFTIVTATutTFBxiWN6KwUe_QRNnAmFLP-O75gNMxEg",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 267611872,
+          "mode": "list",
+          "cachedResultName": "dados",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1DjFTIVTATutTFBxiWN6KwUe_QRNnAmFLP-O75gNMxEg/edit#gid=267611872"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "phone": "={{ $('Dados').item.json.phone }}",
+            "status": "TRUE"
+          },
+          "matchingColumns": [
+            "phone"
+          ],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1920,
+        592
+      ],
+      "id": "30d94da5-095f-418e-b7a9-17850093768b",
+      "name": "Atualizar Status",
+      "credentials": {
+        "googleApi": {
+          "id": "swkTbfQwhacJlp71",
+          "name": "Google Service Account account"
+        }
+      },
+      "notes": "Encontre mais em:\nlinks.dnnr.dev ou\nhttps://www.youtube.com/@devdenegociosmg"
+    },
+    {
+      "parameters": {
+        "content": "## Atualização de status\nAtualiza a planilha que a mensagem foi enviada",
+        "height": 280,
+        "width": 276,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        464
+      ],
+      "id": "aa27ec1b-c319-47d1-b428-f0affceddfcb",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "## Debounce\n\nIntervalo de tempo entre um disparo e outro",
+        "height": 280,
+        "width": 276,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        464
+      ],
+      "id": "e00b52e8-37c3-4863-8d2a-82ef2b7c31be",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "=0 12 * * *"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        96,
+        224
+      ],
+      "id": "25e6de4f-e4da-4c8f-97b9-2d9108bd7bfb",
+      "name": "Agendamento",
+      "notes": "Encontre mais em:\nlinks.dnnr.dev ou\nhttps://www.youtube.com/@devdenegociosmg"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        96,
+        80
+      ],
+      "id": "932d0709-2c52-4ad5-b71a-ae4bacd7a113",
+      "name": "Manual",
+      "notes": "Encontre mais em:\nlinks.dnnr.dev ou\nhttps://www.youtube.com/@devdenegociosmg"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "975edb01-d63d-4c4e-9a18-2f93e0dda23d",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "false",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "cfb9bc3b-85ca-47a4-a648-f4a56b54731c",
+              "leftValue": "={{ $json.phone }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        672,
+        80
+      ],
+      "id": "04c5a80f-0dc7-4d30-b3e5-3cfa956bed37",
+      "name": "Condicional",
+      "notes": "Encontre mais em:\nlinks.dnnr.dev ou\nhttps://www.youtube.com/@devdenegociosmg"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": "Terminou envio",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        32
+      ],
+      "id": "5e74974b-d4af-4704-8131-0dc039f8a7eb",
+      "notes": "Encontre mais em:\nlinks.dnnr.dev ou\nhttps://www.youtube.com/@devdenegociosmg"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        672,
+        224
+      ],
+      "id": "bd1aac1a-8237-4a46-9b23-3fee54c995e1",
+      "name": "Sem contatos",
+      "notes": "Encontre mais em:\nlinks.dnnr.dev ou\nhttps://www.youtube.com/@devdenegociosmg"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8ad9bd09-c4fe-49f2-9c3a-2a2e2f116dbb",
+              "name": "phone",
+              "value": "={{ $('Condicional').item.json.phone }}",
+              "type": "string"
+            },
+            {
+              "id": "e5894c3c-fe19-42e4-b932-5e9cdc73e880",
+              "name": "message",
+              "value": "=Sua mensagem aqui",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        224
+      ],
+      "id": "66beb77d-89f0-45e6-8431-4e5b2d943ac8",
+      "name": "Dados",
+      "notes": "Encontre mais em:\nlinks.dnnr.dev ou\nhttps://www.youtube.com/@devdenegociosmg"
+    },
+    {
+      "parameters": {
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2240,
+        592
+      ],
+      "id": "f0d1d3cf-6bda-4ff9-9af4-150160143656",
+      "name": "debounce",
+      "webhookId": "b75bb0d7-9894-4ae0-8c23-a003c774fa8a",
+      "notes": "Encontre mais em:\nlinks.dnnr.dev ou\nhttps://www.youtube.com/@devdenegociosmg"
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $('Restart the session').item.json.name }}",
+        "chatId": "={{ $json.chatId }}",
+        "text": "={{ $('Dados').item.json.message }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        1920,
+        224
+      ],
+      "id": "d238aea7-49fc-4443-a394-3236a1b719c7",
+      "name": "Send a text message",
+      "credentials": {
+        "wahaApi": {
+          "id": "z8W19Fj1bOPHkyR9",
+          "name": "WAHA account"
+        }
+      },
+      "notes": "Encontre mais em:\nlinks.dnnr.dev ou\nhttps://www.youtube.com/@devdenegociosmg"
+    },
+    {
+      "parameters": {
+        "resource": "Sessions",
+        "operation": "Restart",
+        "session": "=default",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        1600,
+        224
+      ],
+      "id": "7afb5399-0edb-4d43-abb8-2230cffdc9bd",
+      "name": "Restart the session",
+      "credentials": {
+        "wahaApi": {
+          "id": "z8W19Fj1bOPHkyR9",
+          "name": "WAHA account"
+        }
+      },
+      "notes": "Encontre mais em:\nlinks.dnnr.dev ou\nhttps://www.youtube.com/@devdenegociosmg"
+    },
+    {
+      "parameters": {
+        "resource": "Contacts",
+        "operation": "Check Exists",
+        "session": "={{ $json.name }}",
+        "phone": "={{ $('Dados').item.json.phone }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        1600,
+        16
+      ],
+      "id": "2e195b3b-b1be-4a0f-9a3f-d2468e7ec2b7",
+      "name": "Check phone number is registered in WhatsApp.",
+      "credentials": {
+        "wahaApi": {
+          "id": "z8W19Fj1bOPHkyR9",
+          "name": "WAHA account"
+        }
+      },
+      "notes": "Encontre mais em:\nlinks.dnnr.dev ou\nhttps://www.youtube.com/@devdenegociosmg"
+    },
+    {
+      "parameters": {
+        "content": "## Envio da mensagem\nEnvia mensagem pelo Evolution",
+        "height": 520,
+        "width": 268,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        -96
+      ],
+      "id": "04ed1826-d7d9-4d9d-aa35-1ef131d09828",
+      "name": "Sticky Note14"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "6f59e6df-cd46-4023-b3a4-a4e03187e78e",
+              "leftValue": "={{ $json.numberExists }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1920,
+        16
+      ],
+      "id": "7fec1171-d893-4886-9cba-bcad25ed03fd",
+      "name": "If"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Processar Contatos": {
+      "main": [
+        [
+          {
+            "node": "Terminou envio",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Listar Contatos": {
+      "main": [
+        [
+          {
+            "node": "Condicional",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Atualizar Status": {
+      "main": [
+        [
+          {
+            "node": "debounce",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agendamento": {
+      "main": [
+        [
+          {
+            "node": "Listar Contatos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual": {
+      "main": [
+        [
+          {
+            "node": "Listar Contatos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Condicional": {
+      "main": [
+        [
+          {
+            "node": "Processar Contatos",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sem contatos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dados": {
+      "main": [
+        [
+          {
+            "node": "Restart the session",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "debounce": {
+      "main": [
+        [
+          {
+            "node": "Processar Contatos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message": {
+      "main": [
+        [
+          {
+            "node": "Atualizar Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Restart the session": {
+      "main": [
+        [
+          {
+            "node": "Check phone number is registered in WhatsApp.",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check phone number is registered in WhatsApp.": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "debounce",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "163b2485-df47-4e3a-858c-22bebe8b4fa4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a941d6f80caec2804d21d300d7979c136051e44847940b96adc10bf9f428d057"
+  },
+  "id": "baG3ilcTTD5oOMX9",
+  "tags": [
+    {
+      "createdAt": "2025-09-13T12:48:08.623Z",
+      "updatedAt": "2025-09-13T12:48:08.623Z",
+      "id": "mrkuxBkK9efcEYuY",
+      "name": "Dev de Negócios"
+    }
+  ]
+}

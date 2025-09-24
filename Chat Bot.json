@@ -1,0 +1,444 @@
+{
+  "name": "Chat Bot",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "webhook",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8c48671e-9e0d-4a76-bc27-a15066b2f082",
+      "name": "Webhook",
+      "webhookId": "4bd2ec55-705f-4a2f-b032-6be28a482313"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ae97c7d5-3244-4d7a-a168-d49511628ba1",
+              "name": "event",
+              "value": "={{ $json.body.event }}",
+              "type": "string"
+            },
+            {
+              "id": "71a49a7b-c0b1-496d-9986-b6447d6e7919",
+              "name": "session",
+              "value": "={{ $json.body.session }}",
+              "type": "string"
+            },
+            {
+              "id": "e24ecf3c-97f1-488d-9712-6fa5963dddc4",
+              "name": "fromMe",
+              "value": "={{ $json.body.payload.fromMe }}",
+              "type": "string"
+            },
+            {
+              "id": "16ef1669-1d2c-43c4-ba95-628894c3ef41",
+              "name": "from",
+              "value": "={{ $json.body.payload.from }}",
+              "type": "string"
+            },
+            {
+              "id": "f4ef5485-e915-4383-856f-99d10c279115",
+              "name": "pushName",
+              "value": "={{ $json.body.payload._data.Info.PushName }}",
+              "type": "string"
+            },
+            {
+              "id": "7eac5439-c58a-4da9-89fb-2af922461876",
+              "name": "payloadId",
+              "value": "={{ $json.body.payload.id }}",
+              "type": "string"
+            },
+            {
+              "id": "2fcaed69-f1b3-43fd-8089-ffbc1204f67a",
+              "name": "message",
+              "value": "={{ $json.body.payload.body }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "f91533c9-93d0-42e4-b85b-c1896b5fe8ec",
+      "name": "Dados"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.event }}",
+                    "rightValue": "message",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "c898fc24-0ca9-4b4b-96a2-98ceef38089f"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "a86e0def-e958-42a9-89e0-bf01dbd8a780",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message }}",
+        "options": {
+          "systemMessage": "{\n  \"name\": \"Chico\",\n  \"role\": \"Especialista em vendas de sites institucionais\",\n  \"instructions\": {\n    \"context\": \"Você é um atendente virtual especializado em vender sites institucionais de R$699,90 (pagamento único). Seu objetivo é convencer e esclarecer dúvidas dos clientes sobre a criação do site. O site é simples, informativo, inclui contatos e serviços prestados. Não é e-commerce.\",\n    \"rules\": [\n      \"Seu nome é Chico e você sempre se apresenta de forma amigável.\",\n      \"O valor do site é R$699,90 pagamento único.\",\n      \"Outros custos: domínio do site R$40 por ano.\",\n      \"Não existe mensalidade.\",\n      \"O site NÃO é e-commerce. Apenas landing pages e institucionais.\",\n      \"Responda apenas sobre dúvidas relacionadas à venda do site. Se o usuário perguntar sobre algo que não tenha relação, diga de forma educada que não pode ajudar com esse assunto.\",\n      \"Se o usuário fechar a compra, responda APENAS: 'Um momento por favor, vou te direcionar para o time responsável por finalizar.'\",\n      \"Se o usuário continuar enviando mensagens após a compra finalizada, responda apenas: 'Mais um momento por favor.'\",\n      \"Sempre mantenha o tom amigável, claro e objetivo.\"\n    ],\n    \"examples\": {\n      \"user_question_price\": \"Quanto custa o site?\",\n      \"assistant_answer_price\": \"Olá! O site institucional custa apenas R$699,90 em pagamento único. Além disso, há apenas a taxa do domínio, que é R$40 por ano. E o melhor: não tem mensalidade! 😃\",\n      \"user_question_features\": \"Esse site tem loja virtual?\",\n      \"assistant_answer_features\": \"Opa! Esse modelo de site não é e-commerce, é um site institucional, perfeito para apresentar sua empresa, serviços e formas de contato. Se precisar de e-commerce, infelizmente não é esse produto que oferecemos.\",\n      \"user_buying\": \"Fechado, quero comprar!\",\n      \"assistant_answer_buying\": \"Um momento por favor, vou te direcionar para o time responsável por finalizar.\",\n      \"user_after_finalized\": \"E quanto tempo leva para entregar?\",\n      \"assistant_after_finalized\": \"Mais um momento por favor.\"\n    }\n  }\n}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        624,
+        0
+      ],
+      "id": "a63ed7a8-e133-4c59-ad60-36215f57a26c",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        496,
+        208
+      ],
+      "id": "de37d5be-bc3a-4e44-843e-40875174efde",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "qXTBDmWKr5RWgtfQ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Dados').item.json.from }}",
+        "sessionTTL": 3600,
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.5,
+      "position": [
+        688,
+        240
+      ],
+      "id": "3c1abe35-f85a-4fae-9038-3109011ef04c",
+      "name": "Redis Chat Memory",
+      "credentials": {
+        "redis": {
+          "id": "F9teJfcAgkvdEplv",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Seen",
+        "session": "={{ $('Dados').item.json.session }}",
+        "chatId": "={{ $('Dados').item.json.from }}",
+        "messageId": "={{ $('Dados').item.json.payloadId }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        976,
+        0
+      ],
+      "id": "9d884042-91eb-43ed-817d-802cd4b541a0",
+      "name": "Send Seen",
+      "credentials": {
+        "wahaApi": {
+          "id": "z8W19Fj1bOPHkyR9",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $('Dados').item.json.session }}",
+        "chatId": "={{ $('Dados').item.json.from }}",
+        "text": "={{ $('AI Agent').item.json.output }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        1184,
+        0
+      ],
+      "id": "2b33ceff-4815-4f4f-a4e4-c5e74d708d2f",
+      "name": "Send a text message",
+      "credentials": {
+        "wahaApi": {
+          "id": "z8W19Fj1bOPHkyR9",
+          "name": "WAHA account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "accept": "application/json, text/plain, */*",
+            "content-type": "application/json",
+            "user-agent": "WAHA/2025.6.4",
+            "x-webhook-request-id": "01K3SEJKHRYMEA2Y2BQ5BFY1FF",
+            "x-webhook-timestamp": "1756422032952",
+            "content-length": "2113",
+            "accept-encoding": "gzip, compress, deflate, br",
+            "host": "host.docker.internal:5678",
+            "connection": "keep-alive"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "id": "evt_01k3sejkhryjz6bhsybncve5w9",
+            "timestamp": 1756422032952,
+            "event": "message",
+            "session": "default",
+            "metadata": {},
+            "me": {
+              "id": "553195925025@c.us",
+              "pushName": "Undefined",
+              "jid": "553195925025:1@s.whatsapp.net"
+            },
+            "payload": {
+              "id": "false_553171402515@c.us_3B4B73E46BF208E44DD6",
+              "timestamp": 1756422032,
+              "from": "553171402515@c.us",
+              "fromMe": false,
+              "source": "app",
+              "body": "Olá chat bot",
+              "to": null,
+              "participant": null,
+              "hasMedia": false,
+              "media": null,
+              "ack": 2,
+              "ackName": "DEVICE",
+              "replyTo": null,
+              "_data": {
+                "Info": {
+                  "Chat": "553171402515@s.whatsapp.net",
+                  "Sender": "553171402515:72@s.whatsapp.net",
+                  "IsFromMe": false,
+                  "IsGroup": false,
+                  "AddressingMode": "",
+                  "SenderAlt": "18408296988870:72@lid",
+                  "RecipientAlt": "",
+                  "BroadcastListOwner": "",
+                  "ID": "3B4B73E46BF208E44DD6",
+                  "ServerID": 0,
+                  "Type": "text",
+                  "PushName": "Denner Azevedo",
+                  "Timestamp": "2025-08-28T23:00:32Z",
+                  "Category": "",
+                  "Multicast": false,
+                  "MediaType": "",
+                  "Edit": "",
+                  "MsgBotInfo": {
+                    "EditType": "",
+                    "EditTargetID": "",
+                    "EditSenderTimestampMS": "0001-01-01T00:00:00Z"
+                  },
+                  "MsgMetaInfo": {
+                    "TargetID": "",
+                    "TargetSender": "",
+                    "DeprecatedLIDSession": null,
+                    "ThreadMessageID": "",
+                    "ThreadMessageSenderJID": ""
+                  },
+                  "VerifiedName": null,
+                  "DeviceSentMeta": null
+                },
+                "Message": {
+                  "conversation": "Olá chat bot",
+                  "messageContextInfo": {
+                    "deviceListMetadata": {
+                      "senderKeyHash": "S29mSQSe5NivBQ==",
+                      "senderTimestamp": 1756256977,
+                      "recipientKeyHash": "8Gu3TYlmHkiDIg==",
+                      "recipientTimestamp": 1756312579
+                    },
+                    "deviceListMetadataVersion": 2,
+                    "messageSecret": "TIlshZ20V5r+RB7sS45x7fU1GsLRK9KBvExOaGMo8H0="
+                  }
+                },
+                "IsEphemeral": false,
+                "IsViewOnce": false,
+                "IsViewOnceV2": false,
+                "IsViewOnceV2Extension": false,
+                "IsDocumentWithCaption": false,
+                "IsLottieSticker": false,
+                "IsEdit": false,
+                "SourceWebMsg": null,
+                "UnavailableRequestID": "",
+                "RetryCount": 0,
+                "NewsletterMeta": null,
+                "RawMessage": {
+                  "conversation": "Olá chat bot",
+                  "messageContextInfo": {
+                    "deviceListMetadata": {
+                      "senderKeyHash": "S29mSQSe5NivBQ==",
+                      "senderTimestamp": 1756256977,
+                      "recipientKeyHash": "8Gu3TYlmHkiDIg==",
+                      "recipientTimestamp": 1756312579
+                    },
+                    "deviceListMetadataVersion": 2,
+                    "messageSecret": "TIlshZ20V5r+RB7sS45x7fU1GsLRK9KBvExOaGMo8H0="
+                  }
+                },
+                "Status": 3
+              }
+            },
+            "environment": {
+              "version": "2025.6.4",
+              "engine": "GOWS",
+              "tier": "CORE",
+              "browser": null
+            }
+          },
+          "webhookUrl": "http://host.docker.internal:5678/webhook-test/webhook",
+          "executionMode": "test"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dados": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send Seen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Seen": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f2fd65af-fe53-4616-a367-043a773b0c46",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a941d6f80caec2804d21d300d7979c136051e44847940b96adc10bf9f428d057"
+  },
+  "id": "VUL2VLX9wNPEXwg0",
+  "tags": []
+}
