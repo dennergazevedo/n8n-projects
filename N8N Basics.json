@@ -1,0 +1,789 @@
+{
+  "name": "N8N Basics",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Triggers\nNó (node) que inicia um fluxo de automação. Ele é o ponto de partida que “dispara” a execução do workflow — ou seja, é o que faz o workflow começar.",
+        "height": 528,
+        "width": 512,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        80,
+        -32
+      ],
+      "typeVersion": 1,
+      "id": "f7cb651a-09b1-41c3-a7dc-95f7f7e130c5",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "path": "fd86c254-ddd4-47eb-bfd5-5275c1e738f4",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "c64312cb-b7c1-4097-81fb-e8a7ed7c3e07",
+      "name": "Webhook",
+      "webhookId": "fd86c254-ddd4-47eb-bfd5-5275c1e738f4"
+    },
+    {
+      "parameters": {
+        "content": "## Condicionais\nFormas de tomar decisões dentro do fluxo — ou seja, permitem que a automação siga caminhos diferentes dependendo de uma condição (como um “se / senão”).",
+        "height": 528,
+        "width": 528,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1168,
+        -32
+      ],
+      "typeVersion": 1,
+      "id": "3597152b-f7df-4dbb-b039-b25b91d6d714",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "e2970762-bedc-4607-ac46-cd547f3e074f"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "332717a0-d7ef-4e12-8772-c7983363bece",
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "409e42b7-e176-4bcd-abef-67ce8e8e163b",
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1216,
+        304
+      ],
+      "id": "cf96b51c-4950-4be7-8ba7-1b9955aa1428",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4c919fae-0436-4f11-bdee-335569ce3055",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1216,
+        128
+      ],
+      "id": "88a8050f-afbc-46f4-a293-f5a7cf9aaed7",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "content": "## Conectores\nFormas de conectar com sistemas externos — como por exemplo: Google, Meta, OpenAI, Sistemas privados e etc.",
+        "height": 528,
+        "width": 496,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1744,
+        -32
+      ],
+      "typeVersion": 1,
+      "id": "f9d85506-0140-432e-97de-cd28daaa305e",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        160,
+        720
+      ],
+      "id": "e8058ac6-3b0c-4cbf-937c-0f874ab0f7d2",
+      "name": "Chat",
+      "webhookId": "c3a93524-a54c-4342-9ca1-38bd236d942f"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        144,
+        128
+      ],
+      "id": "de117788-1620-4468-884b-592b217cbe01",
+      "name": "Manual"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        384,
+        128
+      ],
+      "id": "9e5cf8a4-47a4-4c42-a12d-56d07087d8a5",
+      "name": "Agendado"
+    },
+    {
+      "parameters": {
+        "content": "## Dados\nManipule e organize informações dentro do seu fluxo — usado para editar ou repetir ações com cada item de dados.",
+        "height": 528,
+        "width": 480,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        640,
+        -32
+      ],
+      "typeVersion": 1,
+      "id": "44a90770-7153-4bcb-8cb6-23bbb53dc174",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        720,
+        128
+      ],
+      "id": "fbe55b9d-ecd8-418a-965a-a4eec9a01dd2",
+      "name": "Editar dados"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        720,
+        320
+      ],
+      "id": "2ab7da8c-c229-4801-9cc6-a1fdc00d808f",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0f2e4eef-790c-44bd-ad84-5c11b1f00776",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        1472,
+        128
+      ],
+      "id": "0f1e3bf7-c147-420c-87b4-03cbe5e32725",
+      "name": "Filter"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1472,
+        320
+      ],
+      "id": "59a2bc61-7bf8-40a6-8801-dd36d344bfe6",
+      "name": "Wait",
+      "webhookId": "b62121d7-ed72-4154-ab4e-4800c471bfa1"
+    },
+    {
+      "parameters": {
+        "content": "## Inteligência Artificial\nUse o poder da IA para analisar, resumir e gerar conteúdo automaticamente dentro dos seus fluxos.”",
+        "height": 528,
+        "width": 560,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2608,
+        -32
+      ],
+      "typeVersion": 1,
+      "id": "f5fc5324-f43b-4c07-98ec-833d91e0dd21",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        2656,
+        112
+      ],
+      "id": "2b8156fc-2f8f-4162-beda-979a73110df1",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        2656,
+        352
+      ],
+      "id": "4b1d4e93-daa0-4ec6-aa13-87f5f45a6a7c",
+      "name": "ChatGPT",
+      "credentials": {
+        "openAiApi": {
+          "id": "swRvc3XZZTHNB8b8",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmOllama",
+      "typeVersion": 1,
+      "position": [
+        2912,
+        352
+      ],
+      "id": "73ee64af-929b-424a-9c16-a7ffcd9522f9",
+      "name": "Ollama"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2784,
+        352
+      ],
+      "id": "d924ed80-ccbc-4248-b9b1-7619257c4375",
+      "name": "Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "XYK8ivlP5tfLiVti",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "claude-sonnet-4-20250514",
+          "cachedResultName": "Claude 4 Sonnet"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.3,
+      "position": [
+        3040,
+        352
+      ],
+      "id": "ca80f834-ee04-418f-8727-dabf4ac6c25b",
+      "name": "Cloud"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": "Loop",
+      "typeVersion": 1,
+      "position": [
+        944,
+        304
+      ],
+      "id": "97976bd0-12e6-4f09-bca1-7a639583e3fc"
+    },
+    {
+      "parameters": {
+        "content": "## Programação\nCrie lógicas personalizadas para ir além dos blocos prontos.",
+        "height": 528,
+        "width": 272,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2288,
+        -32
+      ],
+      "typeVersion": 1,
+      "id": "ece17a4f-b4e7-4d17-b716-1723e2960382",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2336,
+        112
+      ],
+      "id": "c5e9d8a0-2a60-42e0-9564-2a4c86288838",
+      "name": "Javascript"
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "# Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor item in _input.all():\n  item.json.myNewField = 1\nreturn _input.all()"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2336,
+        320
+      ],
+      "id": "d1d17d0e-8233-4b24-aeb0-d5ac796af97d",
+      "name": "Python"
+    },
+    {
+      "parameters": {
+        "resource": "chatMessage",
+        "operation": "sendAndWait",
+        "chatId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.microsoftTeams",
+      "typeVersion": 2,
+      "position": [
+        2032,
+        320
+      ],
+      "id": "0167a64e-4d80-4b22-a06d-a31c7f5e51d5",
+      "name": "Teams",
+      "webhookId": "b38687e7-c422-45fb-bed0-1f03b69d1c30"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1792,
+        128
+      ],
+      "id": "7636c4d9-bf5a-4374-8e48-7b3c0b4e43ef",
+      "name": "Gmail",
+      "webhookId": "cc0726f8-d715-4873-8f11-afa64e3bd6e7",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "3NczT1jtgERL46iq",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        2032,
+        128
+      ],
+      "id": "339a3a8e-8a61-4e13-9186-42bab54cb997",
+      "name": "WhatsApp",
+      "webhookId": "0b043809-2a54-4373-a3bc-3305753fc917"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "user": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        1792,
+        320
+      ],
+      "id": "f0a6f951-076e-4cb6-8877-c8e9573dfbb3",
+      "name": "Slack",
+      "webhookId": "6bd42886-f05c-46d6-8eda-f8066b38a419"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4b6f31fb-903e-4a0f-b67f-a797c05855dc",
+              "name": "message",
+              "value": "={{ $json.chatInput.replace(\"Send:\", \"\") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        624,
+        704
+      ],
+      "id": "67bc713e-d68d-4ae1-9bd5-ae325e064923",
+      "name": "Remover comando"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "={{ $json.message }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        832,
+        704
+      ],
+      "id": "d2d808c5-a2f6-4e06-ae79-8b4ab04696d1",
+      "name": "OpenAI - ChatGPT",
+      "credentials": {
+        "openAiApi": {
+          "id": "swRvc3XZZTHNB8b8",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "me@dnnr.dev",
+        "subject": "E-mail enviado do N8N",
+        "emailType": "text",
+        "message": "={{ $json.message.content }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1184,
+        704
+      ],
+      "id": "cef897f5-430c-40eb-af68-7ed964f1d95b",
+      "name": "Send a message",
+      "webhookId": "a835a3f3-d28c-4051-b1fc-6f1533acbb95",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "3NczT1jtgERL46iq",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "58d16a39-b58d-458e-a93c-fed45f6128a3",
+              "leftValue": "={{ $json.chatInput }}",
+              "rightValue": "Send:",
+              "operator": {
+                "type": "string",
+                "operation": "startsWith"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        352,
+        720
+      ],
+      "id": "683cdf00-3fc5-4765-89ea-68c2690b732f",
+      "name": "É pra enviar?"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Switch": {
+      "main": [
+        [],
+        [],
+        []
+      ]
+    },
+    "Editar dados": {
+      "main": [
+        []
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ChatGPT": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Cloud": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Loop": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Javascript": {
+      "main": [
+        []
+      ]
+    },
+    "Teams": {
+      "main": [
+        []
+      ]
+    },
+    "Chat": {
+      "main": [
+        [
+          {
+            "node": "É pra enviar?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remover comando": {
+      "main": [
+        [
+          {
+            "node": "OpenAI - ChatGPT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI - ChatGPT": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "É pra enviar?": {
+      "main": [
+        [
+          {
+            "node": "Remover comando",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "b0bac180-8a92-43c3-b357-e09a52b0dc2c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "eca6c544900719bcbbea39a84a59afd6b9c369d3d8cf15c68fb4389957dbd7b5"
+  },
+  "id": "Tw0jhfUESoEdLuHX",
+  "tags": []
+}
