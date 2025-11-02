@@ -1,0 +1,328 @@
+{
+  "name": "Blog Dev de Negócios",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "=https://newsapi.org/v2/everything?q=tecnologia&from=2025-10-02&sortBy=publishedAt&apiKey={{SUA_KEY_NEWS_API}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        192,
+        0
+      ],
+      "id": "9670b479-7c96-48f8-98ba-146e22959497",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Você é um especialista em tecnologia e redator de conteúdo.\nCrie uma postagem no formato **Markdown** a partir da seguinte notícia:\n\n```\nTítulo: {{ $json.title }}\nDescrição: {{ $json.description }}\nReferência: {{ $json.refer }}\n```\n\nSiga as instruções abaixo com precisão:\n\n* Estruture o conteúdo com **título**, **subtítulos** e **bullet points**.\n* Destaque as **inovações**, **tendências** e **impactos** apresentados na notícia.\n* O tom deve ser **profissional**, **didático** e **voltado para o público de tecnologia e negócios**.\n* Deve ser 100% em português.\n* Ao final, adicione um parágrafo de conclusão **convidando o leitor a se inscrever no canal Dev de Negócios** com o link:\n  👉 [youtube.com/@devdenegociosmg](https://www.youtube.com/@devdenegociosmg)\n\nO retorno deve ser **apenas um JSON válido**, seguindo **exatamente** o formato abaixo — sem comentários, explicações ou qualquer texto fora do JSON:\n\n{\n  \"title\": \"string\",\n  \"category\": \"Carreira\" | \"StartUp\" | \"Negócios\" | \"Tecnologia\",\n  \"excerpt\": \"string\",\n  \"content\": \"string (markdown da postagem)\",\n  \"slug\": \"string (gerado automaticamente a partir do title, em formato slug)\"\n}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        592,
+        0
+      ],
+      "id": "78403ab2-564c-4c2f-a04f-490b1d6e1e0d",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "swRvc3XZZTHNB8b8",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "posts_public",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "slug",
+              "fieldValue": "={{ $json.slug }}"
+            },
+            {
+              "fieldId": "title",
+              "fieldValue": "={{ $json.title }}"
+            },
+            {
+              "fieldId": "date",
+              "fieldValue": "={{ $json.date }}"
+            },
+            {
+              "fieldId": "category",
+              "fieldValue": "={{ $json.category }}"
+            },
+            {
+              "fieldId": "excerpt",
+              "fieldValue": "={{ $json.excerpt }}"
+            },
+            {
+              "fieldId": "image",
+              "fieldValue": "={{ $json.image }}"
+            },
+            {
+              "fieldId": "content",
+              "fieldValue": "={{ $json.content }}"
+            },
+            {
+              "fieldId": "author",
+              "fieldValue": "={{ $json.Author }}"
+            },
+            {
+              "fieldId": "api_key",
+              "fieldValue": "{{SUA_KEY_TABLE_SUPABASE}}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        0
+      ],
+      "id": "e95fe2a3-7e50-43b5-9186-aa51e782bc8e",
+      "name": "Create a row",
+      "credentials": {
+        "supabaseApi": {
+          "id": "giUipsMHLZwxqjRk",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "9a58a551-49e7-4ba9-87f2-e2f0675b08bb",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1a2a2160-3fbd-4c46-a1ca-8df3a06b9c5a",
+              "name": "title",
+              "value": "={{ $json.articles[0].title }}",
+              "type": "string"
+            },
+            {
+              "id": "2bc38278-6158-43e3-a99b-e703a0dfc255",
+              "name": "description",
+              "value": "={{ $json.articles[0].description }}",
+              "type": "string"
+            },
+            {
+              "id": "23047e03-0c8d-4955-8fe0-e570c8752156",
+              "name": "image",
+              "value": "={{ $json.articles[0].urlToImage }}",
+              "type": "string"
+            },
+            {
+              "id": "34ce68c0-15eb-4d07-ba11-28544f53970e",
+              "name": "refer",
+              "value": "={{ $json.articles[0].url }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        384,
+        0
+      ],
+      "id": "702ded5e-4684-4975-b284-c15b83010918",
+      "name": "Normalize News"
+    },
+    {
+      "parameters": {
+        "jsCode": "const hoje = new Date();\n\nconst yyyy = hoje.getFullYear();\nconst mm = String(hoje.getMonth() + 1).padStart(2, '0');\nconst dd = String(hoje.getDate()).padStart(2, '0');\n\nconst dataHoje = `${yyyy}-${mm}-${dd}`;\n\nconst cleanedJson = $input.first().json.message.content\n  .replace(/```/g, '')\n  .replace(/\\bjson\\b/g, '')\n  .trim();\n\nconst parsed = JSON.parse(cleanedJson);\n\nreturn {...parsed, date: dataHoje};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        944,
+        0
+      ],
+      "id": "c87b3eef-e43e-45fc-9ef5-46ff6c0aef88",
+      "name": "Convert Content"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fedf6d50-ee85-48fb-894f-149e5cc9f29b",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "45b04872-0b3c-422f-9e7f-b173f7a288cf",
+              "name": "excerpt",
+              "value": "={{ $json.excerpt }}",
+              "type": "string"
+            },
+            {
+              "id": "284e6251-27b0-47a8-92f0-91cda23c8681",
+              "name": "category",
+              "value": "={{ $json.category }}",
+              "type": "string"
+            },
+            {
+              "id": "8b26abce-7f15-41d1-bd0b-0e0558167f11",
+              "name": "content",
+              "value": "={{ $json.content }}",
+              "type": "string"
+            },
+            {
+              "id": "310728dd-14d9-41d7-b162-2584abea7dd0",
+              "name": "slug",
+              "value": "={{ $json.slug }}",
+              "type": "string"
+            },
+            {
+              "id": "a2c8e63b-caa9-4b9d-9755-452d0b05ca9b",
+              "name": "image",
+              "value": "={{ $('Normalize News').item.json.image }}",
+              "type": "string"
+            },
+            {
+              "id": "599a002d-e865-4c29-b5ec-df6f2f993a69",
+              "name": "date",
+              "value": "={{ $json.date }}",
+              "type": "string"
+            },
+            {
+              "id": "67b8ebc9-6d47-4d01-a382-399e92417227",
+              "name": "Author",
+              "value": "Equipe Dev de Negócios",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1168,
+        0
+      ],
+      "id": "79d4ed19-dcfe-4a2e-aba6-cb3a6bbd3226",
+      "name": "Normalize Content"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Normalize News",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Convert Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize News": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Content": {
+      "main": [
+        [
+          {
+            "node": "Normalize Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Content": {
+      "main": [
+        [
+          {
+            "node": "Create a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "595bf253-5ea5-4f07-9245-8c17673a2dd6",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "eca6c544900719bcbbea39a84a59afd6b9c369d3d8cf15c68fb4389957dbd7b5"
+  },
+  "id": "r8lBeiqQhUyoiVHO",
+  "tags": []
+}
